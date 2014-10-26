@@ -1,4 +1,4 @@
-require 'calc/operation'
+require 'calc/token'
 
 module Calc
   def self.eval(string)
@@ -8,9 +8,9 @@ module Calc
   end
 
   def self.evaluate(nums, operations)
-    result = nums.pop
+    result = nums.pop.value
     until operations.empty?
-      result = operations.pop.call(result, nums.pop)
+      result = operations.pop.call(result, nums.pop.value)
     end
     result
   end
@@ -25,11 +25,11 @@ module Calc
       operation = operation_regexp.match(input)
       num = num_regexp.match(input)
       if operation
-        operations << Calc::Operation.new(operation[0])
+        operations << Calc::Token.new(:operation, operation[0])
         input = input[operation[0].length..-1]
       end
       if num
-        nums << num[0].to_i
+        nums << Calc::Token.new(:numeric, num[0])
         input = input[num[0].length..-1]
       end
     end

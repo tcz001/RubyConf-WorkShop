@@ -1,9 +1,9 @@
 require 'rspec'
 require 'wrong'
-require 'calc'
+require 'spec_helper'
 
 include Wrong
-describe 'calc' do
+describe Calc do
 
   it 'should eval one number' do
     assert('one digit') { Calc.eval('1') == 1 }
