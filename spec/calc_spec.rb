@@ -1,9 +1,9 @@
 require 'rspec'
 require 'wrong'
-require 'calc'
+require 'spec_helper'
 
 include Wrong
-describe 'calc' do
+describe Calc do
 
   it 'should eval one number' do
     assert('one digit') { Calc.eval('1') == 1 }
@@ -15,6 +15,8 @@ describe 'calc' do
     assert('minus') {Calc.eval('1-1') == 0 }
     assert('multiple') {Calc.eval('2*1') == 2 }
     assert('divide') {Calc.eval('4/2') == 2 }
+    assert('minus') {Calc.eval('3-5') == 0 }
+    assert('minus') {Calc.eval('4-10') == 0 }
   end
 
   it 'should eval three or more numbers with two operation' do

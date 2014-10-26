@@ -1,4 +1,20 @@
+require 'calc/token'
+
 module Calc
+  def self.scanners
+    @scanners ||= [
+        {category: :operation, pattern: /\A(\+|-|\*|\/)/},
+        {category: :numeric, pattern: /\A(\d+(\.\d+)?|\.\d+)\b/}
+    ]
+  end
+
+  def self.token_stacks
+    @token_stacks ||= {
+        operation: [],
+        numeric: []
+    }
+  end
+
   def self.eval(string)
     nums, operations = tokenize(string)
     result = evaluate(nums, operations)
@@ -6,33 +22,26 @@ module Calc
   end
 
   def self.evaluate(nums, operations)
-    result = nums.pop
+    result = nums.pop.value
     until operations.empty?
-      result = result.send(operations.pop, nums.pop)
+      result = operations.pop.call(result, nums.pop.value)
     end
     result
   end
 
   def self.tokenize(string)
-    num_regexp = /\A(\d+(\.\d+)?|\.\d+)\b/
-    operation_regexp = /\A(\+|-|\*|\/)/
-    operations = []
-    nums = []
     input = string.dup
     until input.empty?
-      operation = operation_regexp.match(input)
-      num = num_regexp.match(input)
-      if operation
-        operations << operation[0].to_sym
-        input = input[operation[0].length..-1]
-      end
-      if num
-        nums << num[0].to_i
-        input = input[num[0].length..-1]
-      end
+      scanners.each { |scanner|
+        token = scanner[:pattern].match(input)
+        if token
+          token_stacks[scanner[:category]] << Calc::Token.new(scanner[:category], token[0])
+          input = input[token[0].length..-1]
+        end
+      }
     end
-    nums.reverse!
-    operations.reverse!
-    return nums, operations
+    token_stacks[:numeric].reverse!
+    token_stacks[:operation].reverse!
+    return token_stacks[:numeric], token_stacks[:operation]
   end
 end
