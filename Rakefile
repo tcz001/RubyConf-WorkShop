@@ -21,7 +21,7 @@ task :console do
     console = IRB
   end
 
-  require 'dentaku'
+  require_relative 'lib/calc'
   ARGV.clear
   console.start
 end

@@ -19,46 +19,73 @@ Repository for workshop of Ruby China Conference 2014
 
 ##Task 1
 ###读取单个的数字
- ```
-	assert('one digit') { Calc.eval('1') == 1 }
-	assert('multiple digits') { Calc.eval('13') == 13 }
- ```
-##Task 2
-###一对数字的运算
- ```
-    assert('plus') {Calc.eval('1+2') == 3 }
-    assert('minus') {Calc.eval('1-1') == 0 }
-    assert('multiply') {Calc.eval('2*1') == 2 }
-    assert('divide') {Calc.eval('4/2') == 2 }
-```
-###特例，减法也无法获得负数
-```
-    assert('minus') {Calc.eval('3-5') == 0 }
-    assert('minus') {Calc.eval('4-10') == 0 }
-```
-##Task 3
-###多个运算（不带优先级）
+* 可以直接返回其整数值
+* 不考虑非整数和任何其他输入
 
 ```
-	assert('without priority') { Calc.eval('1-1+1') == 1 }
-    assert('without priority') { Calc.eval('1-1+1+3') == 4 }
+Calc.eval('1') == 1 # assert one digit
+Calc.eval('2') == 2 # assert one digit
+Calc.eval('33') == 33 # assert multiple digit
+Calc.eval('33') == 33 # assert multiple digit
 ```
-##Task 4
-###多个运算（带优先级）
+##Task 2
+###一对数字的四则运算
+* 运算式中不存在任何非数字和运算符以外的字符，
+* 除法遵循整数整除原则
+
 ```
-    assert('with priority') { Calc.eval('2+4/2') == 4 }
-    assert('with priority') { Calc.eval('3-6/2') == 0 }
+Calc.eval('1+2') == 3 # plus
+Calc.eval('1-1') == 0 # minus
+Calc.eval('2*1') == 2 # multiply
+Calc.eval('4/2') == 2 # divide
 ```
 ##Task Extra
-###带括号运算
+###特例，减法也无法获得负数
 ```
-	assert('with one operation') { Calc.eval('(1-1)') == 0 }
-    assert('with two operation') { Calc.eval('(1-1+1)') == 1 }
-    assert('with priority') { Calc.eval('(2-1)*2') == 2 }
-    assert('with priority') { Calc.eval('2*(1-2)') == -2 }
+Calc.eval('3-5') == 0 # minus no negative
+Calc.eval('4-10') == 0
 ```
-###奇怪的乘法变异
+##Task 3
+###多个运算
+* 一个运算式中只包含同种类运算
+
 ```
-    assert('multiply') {Calc.eval('2*3') == 222 }
-    assert('multiply') {Calc.eval('1*5') == 11111 }
+Calc.eval('1+1+1') == 3 # multiple plus
+Calc.eval('3*2*2') == 12 # multiple multiply
+```
+##Task Extra
+###乘法变异了！
+* 乘法变成了重复数字的次数
+
+```
+Calc.eval('1*3') == 111 # multiply changed into repeat
+Calc.eval('4*5') == 44444 
+Calc.eval('1*0') == 0 # zero remains
+```
+##Task 4
+###多个运算
+* 不同种类
+* 不带优先级
+* 顺序执行
+
+```
+Calc.eval('1-1+1') == 1 # multiple operations without priority
+Calc.eval('1-1+1+3') == 4
+```
+##Task 5
+###多个运算
+* 不同种类
+* 带优先级
+
+```
+Calc.eval('2+4/2') == 4 # multiple operations with priority
+Calc.eval('4-6/2') == 1
+```
+##Task Extra
+###带括号运算！
+```
+Calc.eval('(1-1)') == 0
+Calc.eval('(1-1+1)') == 1
+Calc.eval('(2-1)*2') == 11
+Calc.eval('2*(3-2)') == 2
 ```
