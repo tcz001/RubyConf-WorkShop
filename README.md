@@ -12,6 +12,11 @@ Repository for workshop of Ruby China Conference 2014
 
 目前，新的信号正在不断被截获，发送频率愈来愈高，而且正从太平洋转移到欧亚大陆，所以我们时间紧迫。
 
+请fork后clone一个seed代码库到本地:
+
+`git clone --recursive git@github.com:YourUsername/RubyConf-2014-Workshop.git`
+
+
 ##Task 1
 ###读取单个的数字
  ```
