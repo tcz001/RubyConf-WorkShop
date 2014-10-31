@@ -3,6 +3,7 @@ GEM
   specs:
     diff-lcs (1.2.5)
     predicated (0.2.6)
+    rake (10.3.2)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -32,5 +33,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  rake
   rspec
   wrong
